@@ -38,14 +38,13 @@ class Perceptron:
         max_min = []
         for i in range(self.X.shape[0]):
             max_min.append(np.dot(self.X[i], self.X[i].T))
-        r = min(max_min)
+        r = min(self.y * (np.dot(self.X, self.Weights.T) + self.bias))
         R = math.sqrt(max(max_min))
         print('#############################################################################\n\n')
         print('The function will converge in {} Loops, if the data are linearly separable! \n\n'.format((R / r) ** 2))
         print('#############################################################################')
 
     def train(self):
-        self.to_cout_max_loop()
         flag = True
         while(flag):
             flag = False
@@ -56,9 +55,11 @@ class Perceptron:
                 else:
                     pass
         self.to_count_loss()
+        self.to_cout_max_loop()
 
 
 if __name__ == '__main__':
     p = Perceptron(np.array([[3, 3], [4, 3], [1, 1]]), np.array([[1], [1], [-1]]), 1)
     p.train()
     print('Weights:{} Bias:{} Loss:{}'.format(p.Weights, p.bias, p.loss))
+
